@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Feb 08 01:39:01 CET 2018:
+ Derby The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820) változat betöltése: a816c00e-0161-72d9-f0ff-0000070ed800 példány
+a(z) C:\GIT\KeszletKezelo\sampleDB adatbázis-könyvtáron: jdk.internal.loader.ClassLoaders$AppClassLoader@73a8dfcc 
+
+java.vendor=Oracle Corporation
+java.runtime.version=9.0.4+11
+user.dir=C:\GIT\KeszletKezelo
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Az adatbázis-osztálybetöltő elindult - derby.database.classpath=''

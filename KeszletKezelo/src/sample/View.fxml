@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <AnchorPane fx:id="anchorPane" prefHeight="800.0" prefWidth="1100.0">
+         <children>
+            <Label layoutX="427.0" layoutY="14.0" text="Készletkezelő ">
+               <font>
+                  <Font size="43.0" />
+               </font>
+            </Label>
+            <SplitPane fx:id="mainSplitPane" dividerPositions="0.20856102003642987" layoutX="-1.0" layoutY="79.0" prefHeight="718.0" prefWidth="1100.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <StackPane fx:id="menuPane" prefHeight="718.0" prefWidth="247.0" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="845.0">
+                     <children>
+                        <Pane fx:id="wineDataChangePane" layoutX="1.0" prefHeight="716.0" prefWidth="838.0" visible="false">
+                           <children>
+                              <TableView fx:id="wineDataChangeTable" onMouseClicked="#isItClickedWine" prefHeight="498.0" prefWidth="866.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                              <Pane fx:id="wineDataChangePaneModifiers" layoutX="4.0" layoutY="504.0" prefHeight="201.0" prefWidth="857.0" visible="false">
+                                 <children>
+                                    <Button fx:id="addNewWine" layoutX="554.0" layoutY="131.0" mnemonicParsing="false" onAction="#addNewWine" prefHeight="45.0" prefWidth="112.0" text="Új tétel rögzítése" />
+                                    <TextField fx:id="nameTFSet" layoutX="111.0" layoutY="54.0" prefHeight="25.0" prefWidth="150.0" />
+                                    <TextField fx:id="typeTFSet" layoutX="328.0" layoutY="54.0" prefHeight="25.0" prefWidth="98.0" />
+                                    <TextField fx:id="yearTFSet" layoutX="512.0" layoutY="54.0" prefHeight="25.0" prefWidth="98.0" />
+                                    <TextField fx:id="pieceTFSet" layoutX="712.0" layoutY="54.0" prefHeight="25.0" prefWidth="98.0" />
+                                    <TextField fx:id="priceTFSet" layoutX="111.0" layoutY="110.0" prefHeight="25.0" prefWidth="123.0" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="41.0" layoutY="58.0" prefHeight="17.0" prefWidth="71.0" text="Borfajta:" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="257.0" layoutY="58.0" prefHeight="17.0" prefWidth="71.0" text="Típus:" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="441.0" layoutY="58.0" prefHeight="17.0" prefWidth="71.0" text="Évjárat:" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="641.0" layoutY="58.0" prefHeight="17.0" prefWidth="71.0" text="Darabszám:" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="218.0" layoutY="114.0" prefHeight="17.0" prefWidth="112.0" text=" Üzlet ID:" />
+                                    <Label alignment="CENTER_RIGHT" layoutX="41.0" layoutY="114.0" prefHeight="17.0" prefWidth="71.0" text="Darab ár:" />
+                                    <Button fx:id="deleteWine" layoutX="693.0" layoutY="131.0" mnemonicParsing="false" onAction="#removeWine" prefHeight="45.0" prefWidth="71.0" text="Tétel&#10;TÖRLÉSE" textAlignment="CENTER" />
+                                    <ChoiceBox fx:id="shopIDChoiceBox" layoutX="330.0" layoutY="110.0" prefHeight="25.0" prefWidth="112.0" />
+                                 </children></Pane>
+                           </children></Pane>
+                        <Pane fx:id="invoicePane" prefHeight="415.0" prefWidth="866.0">
+                           <children>
+                              <TableView fx:id="invoiceTable" prefHeight="280.0" prefWidth="845.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                              <TextField fx:id="invoiceWine" layoutX="47.0" layoutY="293.0" prefHeight="25.0" prefWidth="112.0" />
+                              <TextField fx:id="invoiceQuantityTF" layoutX="262.0" layoutY="293.0" onAction="#checkWineAndPiece" prefHeight="25.0" prefWidth="63.0" />
+                              <Button fx:id="addNewWineToInvoice" layoutX="346.0" layoutY="283.0" mnemonicParsing="false" onAction="#addNewWineToInvoice" prefHeight="45.0" prefWidth="90.0" text="Rögzít" />
+                              <ChoiceBox fx:id="invoicePartnerCB" layoutX="54.0" layoutY="351.0" prefHeight="25.0" prefWidth="112.0" />
+                              <ChoiceBox fx:id="invoiceTypeCB" layoutX="254.0" layoutY="351.0" prefHeight="25.0" prefWidth="105.0" />
+                              <TextField fx:id="invoiceDateTF" layoutX="411.0" layoutY="351.0" prefHeight="25.0" prefWidth="98.0" />
+                              <TextField fx:id="invoiceNumTF" layoutX="76.0" layoutY="385.0" prefHeight="17.0" prefWidth="90.0" />
+                              <TextField fx:id="invoiceDiscountTF" layoutX="254.0" layoutY="385.0" prefHeight="25.0" prefWidth="63.0" />
+                              <TextField fx:id="invoiceFinalPriceTF" layoutX="411.0" layoutY="385.0" prefHeight="25.0" prefWidth="98.0" />
+                              <Label layoutX="14.0" layoutY="355.0" text="Partner:" />
+                              <Label layoutX="14.0" layoutY="297.0" text="Fajta:" />
+                              <Label layoutX="200.0" layoutY="297.0" text="Darabszám:" />
+                              <Label layoutX="183.0" layoutY="355.0" prefHeight="17.0" prefWidth="71.0" text="Fizetési mód:" />
+                              <Label layoutX="372.0" layoutY="355.0" text="Dátum:" />
+                              <Label layoutX="8.0" layoutY="389.0" text="Számlaszám:" />
+                              <Label layoutX="183.0" layoutY="389.0" prefHeight="17.0" prefWidth="71.0" text="Kedvezmény:" />
+                              <Label layoutX="356.0" layoutY="389.0" text="Végső ÁR:" />
+                              <Label layoutX="521.0" layoutY="389.0" text="Rögzítő ID:" />
+                              <TextField fx:id="sellerID" layoutX="586.0" layoutY="385.0" prefHeight="25.0" prefWidth="98.0" />
+                              <Button fx:id="closeInvoice" layoutX="700.0" layoutY="363.0" mnemonicParsing="false" onAction="#closeInvoice" prefHeight="45.0" prefWidth="90.0" text="Lezár" />
+                           </children></Pane>
+                        <Pane fx:id="stockPane" layoutY="463.0" prefHeight="256.0" prefWidth="845.0" visible="false">
+                           <children>
+                              <TableView fx:id="stockTable" layoutY="-2.0" onMouseClicked="#isClickedStockTable" prefHeight="270.0" prefWidth="866.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                           </children></Pane>
+                         <Pane fx:id="stockPaneByCountry" layoutY="1.0" prefHeight="718.0" prefWidth="845.0" visible="false">
+                           <children>
+                              <TableView fx:id="stockTableByCountry" prefHeight="526.0" prefWidth="845.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                           </children></Pane>
+                        <Pane fx:id="addPartnerPane" layoutX="-2.0" layoutY="-1.0" prefHeight="718.0" prefWidth="845.0" visible="false">
+                           <children>
+                              <TableView fx:id="addPartnerTable" prefHeight="504.0" prefWidth="845.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                              <Button fx:id="addNewPartner" layoutX="621.0" layoutY="649.0" mnemonicParsing="false" onAction="#addNewPartner" prefHeight="45.0" prefWidth="211.0" text="Új partner rögzítése" />
+                              <TextField fx:id="nameTFPartner" layoutX="85.0" layoutY="534.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="taxNumberTFPartner" layoutX="374.0" layoutY="534.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="contactTFPartner" layoutX="658.0" layoutY="534.0" prefHeight="17.0" prefWidth="166.0" />
+                              <TextField fx:id="areaCodeTFPartner" layoutX="85.0" layoutY="568.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="cityTFPartner" layoutX="374.0" layoutY="568.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="streetTFPartner" layoutX="659.0" layoutY="568.0" prefHeight="17.0" prefWidth="166.0" />
+                              <TextField fx:id="streetNumTFPartner" layoutX="85.0" layoutY="603.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="phoneNumberTFPartner" layoutX="374.0" layoutY="603.0" prefHeight="25.0" prefWidth="184.0" />
+                              <TextField fx:id="emailTFPartner" layoutX="658.0" layoutY="603.0" prefHeight="25.0" prefWidth="166.0" />
+                              <TextField fx:id="discountTFPartner" layoutX="85.0" layoutY="640.0" prefHeight="25.0" prefWidth="191.0" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="538.0" prefHeight="17.0" prefWidth="71.0" text="Cég neve:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="572.0" prefHeight="17.0" prefWidth="71.0" text="Körzetszám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="586.0" layoutY="572.0" prefWidth="71.0" text="Utca:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="14.0" layoutY="607.0" prefWidth="71.0" text="Házszám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="303.0" layoutY="572.0" prefHeight="17.0" prefWidth="71.0" text="Város/falu:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="303.0" layoutY="538.0" prefHeight="17.0" prefWidth="71.0" text="Adószám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="565.0" layoutY="538.0" prefHeight="17.0" prefWidth="90.0" text="Kapcsolattartó:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="284.0" layoutY="606.0" prefHeight="25.0" prefWidth="90.0" text="Telefonszám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="565.0" layoutY="597.0" prefHeight="37.0" prefWidth="90.0" text="Email cím:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="-3.0" layoutY="628.0" prefHeight="45.0" prefWidth="83.0" text="Kedvezmény:" />
+                           </children></Pane>
+                        <Pane fx:id="modifyPartnerPane" layoutX="8.0" layoutY="9.0" prefHeight="703.0" prefWidth="831.0" visible="false">
+                           <children>
+                              <TableView fx:id="modifyPartnerTable" layoutX="-12.0" layoutY="-9.0" onMouseClicked="#isItClickedPartner" prefHeight="504.0" prefWidth="857.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                              <Button fx:id="modifyPartner" layoutX="403.0" layoutY="638.0" mnemonicParsing="false" onAction="#modifyPartner" prefHeight="45.0" prefWidth="211.0" text="Partner módosítása" />
+                              <TextField fx:id="taxNumberMTFPartner" layoutX="366.0" layoutY="524.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="cityMTFPartner" layoutX="366.0" layoutY="558.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="streetNumMTFPartner" layoutX="366.0" layoutY="593.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="streetMTFPartner" layoutX="77.0" layoutY="593.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="nameMTFPartner" layoutX="77.0" layoutY="524.0" prefHeight="25.0" prefWidth="191.0" />
+                              <TextField fx:id="areaCodeMTFPartner" layoutX="77.0" layoutY="558.0" prefHeight="25.0" prefWidth="191.0" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="6.0" layoutY="525.0" prefHeight="17.0" prefWidth="71.0" text="Cég neve:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="6.0" layoutY="559.0" prefHeight="17.0" prefWidth="71.0" text="Körzetszám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="6.0" layoutY="594.0" prefWidth="71.0" text="Utca:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="594.0" prefWidth="71.0" text="Házszám:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="559.0" prefHeight="17.0" prefWidth="71.0" text="Város/falu:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="525.0" prefHeight="17.0" prefWidth="71.0" text="Adószám:" />
+                              <TextField fx:id="phoneNumberMTFPartner" layoutX="667.0" layoutY="596.0" prefHeight="25.0" prefWidth="149.0" />
+                              <TextField fx:id="contactMTFPartner" layoutX="667.0" layoutY="524.0" prefHeight="25.0" prefWidth="149.0" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="577.0" layoutY="525.0" prefHeight="17.0" prefWidth="90.0" text="Kapcsolattartó:" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="577.0" layoutY="587.0" prefHeight="37.0" prefWidth="90.0" text="Telefonszám:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="594.0" layoutY="559.0" prefHeight="17.0" prefWidth="71.0" text="Email cím:" />
+                              <TextField fx:id="emailMTFPartner" layoutX="667.0" layoutY="562.0" prefHeight="25.0" prefWidth="150.0" />
+                              <TextField fx:id="discountMTFPartner" layoutX="77.0" layoutY="625.0" prefHeight="25.0" prefWidth="191.0" />
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="6.0" layoutY="629.0" prefWidth="71.0" text="Kedvezmény:" />
+                              <Button fx:id="removePartner" layoutX="656.0" layoutY="638.0" mnemonicParsing="false" onAction="#removePartner" prefHeight="45.0" prefWidth="105.0" text="Partner TÖRLÉSE" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="transferPane" prefHeight="716.0" prefWidth="845.0" visible="false">
+                           <children>
+                              <ChoiceBox fx:id="wineFrom" layoutX="180.0" layoutY="65.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="wineTo" layoutX="180.0" layoutY="127.0" prefWidth="150.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="112.0" layoutY="69.0" prefHeight="17.0" prefWidth="56.0" text="Honnan:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="112.0" layoutY="131.0" prefWidth="56.0" text="Hova:" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="employeePane" prefHeight="716.0" prefWidth="866.0" visible="false">
+                           <children>
+                              <TableView fx:id="employeeTable" onMouseClicked="#isItClickedEmployee" prefHeight="526.0" prefWidth="866.0">
+                                 <placeholder>
+                                    <Label text="Nincs adat." />
+                                 </placeholder>
+                              </TableView>
+                              <Button fx:id="adNewEmployee" layoutX="490.0" layoutY="656.0" mnemonicParsing="false" onAction="#adNewEmployee" prefHeight="52.0" prefWidth="105.0" text="Új alkalmazott&#10;hozzáadása" textAlignment="CENTER" />
+                              <TextField fx:id="nameTFEmployee" layoutX="85.0" layoutY="553.0" />
+                              <TextField fx:id="levelTFEmployee" layoutX="331.0" layoutY="553.0" />
+                              <TextField fx:id="birthDateTFEmployee" layoutX="582.0" layoutY="553.0" />
+                              <TextField fx:id="birthPlaceTFEmployee" layoutX="85.0" layoutY="593.0" />
+                              <TextField fx:id="IDCardTFEmployee" layoutX="331.0" layoutY="593.0" />
+                              <TextField fx:id="addressTFEmployee" layoutX="582.0" layoutY="593.0" />
+                              <TextField fx:id="phoneNumberTFEmployee" layoutX="85.0" layoutY="631.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="557.0" prefHeight="17.0" prefWidth="71.0" text="Név:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="260.0" layoutY="557.0" prefHeight="17.0" prefWidth="71.0" text="Szint:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="507.0" layoutY="557.0" prefHeight="17.0" prefWidth="71.0" text="Születési idő:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="260.0" layoutY="597.0" prefHeight="17.0" prefWidth="71.0" text="Személyi ig.:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="2.0" layoutY="597.0" prefHeight="17.0" prefWidth="83.0" text="Születési hely:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="511.0" layoutY="597.0" prefHeight="17.0" prefWidth="71.0" text="Cím:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="260.0" layoutY="635.0" prefHeight="17.0" prefWidth="71.0" text="Üzlet ID:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="635.0" prefHeight="17.0" prefWidth="71.0" text="Telefonszám:" />
+                              <Button fx:id="removeEmployee" layoutX="737.0" layoutY="656.0" mnemonicParsing="false" onAction="#removeEmployee" prefHeight="52.0" prefWidth="90.0" text="Alkalmazott &#10;TÖRLÉSE" textAlignment="CENTER" />
+                              <Button fx:id="modifyEmployee" layoutX="623.0" layoutY="656.0" mnemonicParsing="false" onAction="#modifyEmployee" prefHeight="52.0" prefWidth="83.0" text="Alkalmazott &#10;módosítása" textAlignment="CENTER" />
+                              <ChoiceBox fx:id="shopIDChoiceBoxEmployee" layoutX="330.0" layoutY="631.0" prefWidth="150.0" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="shopPane" prefHeight="718.0" prefWidth="873.0" visible="false">
+                           <children>
+                              <TableView fx:id="shopTable" onMouseClicked="#isItClickedShop" prefHeight="504.0" prefWidth="866.0">
+                                  <placeholder>
+                                      <Label text="Nincs adat." />
+                                  </placeholder>
+                              </TableView>
+                              <Button fx:id="addNewShop" layoutX="433.0" layoutY="637.0" mnemonicParsing="false" onAction="#addNewShop" prefHeight="52.0" prefWidth="123.0" text="Új üzlet hozzáadása" />
+                              <Label alignment="CENTER_RIGHT" layoutX="36.0" layoutY="537.0" text="Üzlet neve:" />
+                              <TextField fx:id="shopNameTFShop" layoutX="93.0" layoutY="533.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="260.0" layoutY="537.0" prefHeight="17.0" prefWidth="83.0" text="Irányítószám:" />
+                              <TextField fx:id="areaCodeTFShop" layoutX="343.0" layoutY="533.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="539.0" layoutY="537.0" prefWidth="56.0" text="Város:" />
+                              <TextField fx:id="cityTFShop" layoutX="595.0" layoutY="533.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="582.0" prefHeight="17.0" prefWidth="56.0" text="Utca:" />
+                              <TextField fx:id="streetTFShop" layoutX="93.0" layoutY="578.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="287.0" layoutY="582.0" prefWidth="56.0" text="Házszám:" />
+                              <TextField fx:id="streetNumTFShop" layoutX="343.0" layoutY="578.0" />
+                              <Button fx:id="removeShop" layoutX="718.0" layoutY="637.0" mnemonicParsing="false" onAction="#removeShop" prefHeight="52.0" prefWidth="105.0" text="Üzlet TÖRLÉSE" />
+                              <Button fx:id="modifyShop" layoutX="585.0" layoutY="637.0" mnemonicParsing="false" onAction="#modifyShop" prefHeight="52.0" prefWidth="105.0" text="Üzlet &#10;módosítása" textAlignment="CENTER" />
+                           </children>
+                        </Pane>
+                        <Pane fx:id="newInvoicePane" layoutX="337.0" layoutY="328.0" prefHeight="186.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="openNewInvoice" layoutX="50.0" layoutY="93.0" mnemonicParsing="false" onAction="#openNewInvoice" prefHeight="64.0" prefWidth="123.0" text="Új számla " />
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
+   </children>
+</GridPane>
