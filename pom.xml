@@ -5,10 +5,13 @@
     <artifactId>keszlet-kezelo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
         <itextpdf-version>5.5.13</itextpdf-version>
         <maven.shade.version>3.1.0</maven.shade.version>
+        <apache.derby.version>10.14.1.0</apache.derby.version>
     </properties>
     <dependencies>
         <dependency>
@@ -21,6 +24,13 @@
             <artifactId>itext-pdfa</artifactId>
             <version>${itextpdf-version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
