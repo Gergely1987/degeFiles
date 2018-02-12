@@ -15,6 +15,20 @@ public class Wine {
     private final SimpleStringProperty price;
     private final SimpleStringProperty date;
     private final SimpleStringProperty shopID;
+    private final SimpleStringProperty toShopID;
+
+
+    public String getToShopID() {
+        return toShopID.get();
+    }
+
+    public SimpleStringProperty toShopIDProperty() {
+        return toShopID;
+    }
+
+    public void setToShopID(String toShopID) {
+        this.toShopID.set(toShopID);
+    }
 
     public String getShopID() {
         return shopID.get();
@@ -63,6 +77,7 @@ public class Wine {
         this.price=new SimpleStringProperty("");
         this.date=new SimpleStringProperty("");
         this.shopID=new SimpleStringProperty("");
+        this.toShopID=new SimpleStringProperty("");
     }
 
     public Wine(String name, String type, String year, String piece, String price, String shopID,String date){
@@ -73,6 +88,7 @@ public class Wine {
         this.price=new SimpleStringProperty(price);
         this.shopID=new SimpleStringProperty(shopID);
         this.id=new SimpleStringProperty("");
+        this.toShopID=new SimpleStringProperty("");
         this.date=new SimpleStringProperty( date);
     }
 
@@ -85,6 +101,7 @@ public class Wine {
         this.date=new SimpleStringProperty(date);
         this.shopID=new SimpleStringProperty(shopID);
         this.id=new SimpleStringProperty(String.valueOf(id));
+        this.toShopID=new SimpleStringProperty("");
     }
 
     public Wine(String name,String type,String year,String piece,String price,String shopID){
@@ -96,7 +113,30 @@ public class Wine {
         this.shopID=new SimpleStringProperty(shopID);
         this.id=new SimpleStringProperty("");
         this.date=new SimpleStringProperty("");
+        this.toShopID=new SimpleStringProperty("");
     }
+    public Wine(String name,String type,String year,String piece,String price,String fromShopID,String toShopID,String date){
+        this.name=new SimpleStringProperty(name);
+        this.type=new SimpleStringProperty(type);
+        this.piece=new SimpleStringProperty(piece);
+        this.year=new SimpleStringProperty(year);
+        this.price=new SimpleStringProperty(price);
+        this.shopID=new SimpleStringProperty(fromShopID);
+        this.toShopID=new SimpleStringProperty(toShopID);
+        this.id=new SimpleStringProperty("");
+        this.date=new SimpleStringProperty(date);
+
+    }
+//    public Wine(String name,String type,String year,Integer piece,Integer price,String shopID){
+//        this.name=new SimpleStringProperty(name);
+//        this.type=new SimpleStringProperty(type);
+//        this.piece=new SimpleStringProperty(String.valueOf(piece));
+//        this.year=new SimpleStringProperty(year);
+//        this.price=new SimpleStringProperty(String.valueOf(price));
+//        this.shopID=new SimpleStringProperty(shopID);
+//        this.id=new SimpleStringProperty("");
+//        this.date=new SimpleStringProperty("");
+//    }
 
 
 
@@ -164,12 +204,12 @@ public class Wine {
     @Override
     public String toString() {
         return
-                name +
-                ", " + type +
-                "," + year +
-                ", " + piece +
-                ", " + price +
-                ", " + shopID
+               "fajta"+ name +
+                ", típus: " + type +
+                ", év:" + year +
+                ", darab: " + piece +
+                ", ár:" + price +
+                ", üzletID" + shopID
                 ;
     }
 }

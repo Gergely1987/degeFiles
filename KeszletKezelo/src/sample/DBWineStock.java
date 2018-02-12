@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBWineStock {
     final String JDBC_Driver = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -60,27 +61,69 @@ public class DBWineStock {
         }
     }
 
-    public void addNewWine_OR_Insert(Wine wine) {
-//        String sql =
-//                "begin"+
-//                "IF EXISTS (select * from wineStock where name="+"'" +wine.getName()+"' "+"years="+"'"+wine.getYear()+"' "+"price="+"'"+wine.getPrice()+"' "+
-//                "shopID="+"'"+wine.getShopID()+"' "+
-//                "update wineStock set piece="+"'"+wine.getPiece()+
-//                "'; "+"else insert into wineStock (name,type,years,piece,price,shopID) values(?,?,?,?,?,?);"+
-//                "END IF;";
-//             String sql="IF EXISTS (SELECT * FROM wineStock WHERE name ="+"'"+wine.getName()+"') "+
-//                     "begin "+
-//                     "update wineStock set piece=piece+"+"'"+wine.getPiece()+"' "+
-//                     "end "+
-//                     "else"+
-//                     "begin"+
-//                     "else insert into wineStock (name,type,years,piece,price,shopID) values(?,?,?,?,?,?)"+
-//                     "end";
+    public ArrayList<Wine> getAllWine() {
+        String sql = "select * from wineStock";
+        ArrayList<Wine> wines = null;
 
-      //  String sql="insert into wineStock (name,type,years,piece,price,shopID) values(name="+"'" +wine.getName()+"',type="+"'" +wine.getType()+"', years="+"'" +wine.getYear()+ "',piece="+ Integer.parseInt(wine.getPiece())+" ,price="+Integer.parseInt(wine.getPrice().replace(" Ft",""))+",shopID="+"'"+wine.getShopID()+"'"+ ")"+ "ON DUPLICATE KEY UPDATE piece=piece+"+Integer.parseInt(wine.getPiece());
+        try {
+            ResultSet rs = createStatement.executeQuery(sql);
+            wines = new ArrayList<Wine>();
+            while (rs.next()) {
+                Wine actualWine = new Wine(rs.getString("name"), rs.getString("type"), rs.getString("years"), rs.getString(String.valueOf("piece")), rs.getString("price"), rs.getString("shopID"));
+                wines.add(actualWine);
+            }
 
-        String sql="insert into wineStock (name) values("+"'"+wine.getName()+"'"+" on duplicate key update piece=piece"+Integer.parseInt(wine.getPiece());
+        } catch (SQLException e) {
+            System.out.println("valami baj van a a WINEStock tábla kiolvasásakor");
+            System.out.println(e);
+        }
+        return wines;
+    }
 
+    public ArrayList<Wine> getAllWinePerShop(String shopID) {
+        String sql = "select * from wineStock where shopID=" + "'" + shopID + "'";
+        ArrayList<Wine> wines = null;
+
+        try {
+            ResultSet rs = createStatement.executeQuery(sql);
+            wines = new ArrayList<Wine>();
+            while (rs.next()) {
+                Wine actualWine = new Wine(rs.getString("name"), rs.getString("type"), rs.getString("years"), rs.getString(String.valueOf("piece")), rs.getString("price"), rs.getString("shopID"));
+                wines.add(actualWine);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("valami baj van a a wineStock tábla kiolvasásakor üzletenként");
+            System.out.println(e);
+        }
+        return wines;
+    }
+
+    public ArrayList<Wine> checkIfExist(Wine wine) {
+        String sql = "select * from wineStock where name=" + "'" + wine.getName() + "' " + "and type=" + "'" + wine.getType() + "' " + "and years=" +
+                "'" + wine.getYear() + "' " + " and price=" + wine.getPrice() +
+                " and shopID=" + "'" + wine.getShopID() + "'";
+        ArrayList<Wine> wines = null;
+
+        try {
+            ResultSet rs = createStatement.executeQuery(sql);
+            wines = new ArrayList<Wine>();
+            while (rs.next()) {
+                Wine actualWine = new Wine(rs.getString("name"), rs.getString("type"), rs.getString("years"),
+                        rs.getString(String.valueOf("piece")), rs.getString(String.valueOf("price")), rs.getString("shopID"));
+
+                wines.add(actualWine);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("valami baj van a a WINE tábla kiolvasásakor, hogy létezik-e");
+            System.out.println(e);
+        }
+        return wines;
+    }
+
+    public void addNewWine(Wine wine) {
+        String sql = "insert into wineStock (name,type,years,piece,price,shopID) values(?,?,?,?,?,?)";//ahány kérdőjel, annyi preparedStatement.setString/setInt kell
         PreparedStatement preparedStatement = null;
 
         try {
@@ -89,14 +132,42 @@ public class DBWineStock {
             preparedStatement.setString(2, wine.getType());
             preparedStatement.setString(3, wine.getYear());
             preparedStatement.setInt(4, Integer.parseInt(wine.getPiece()));
-            preparedStatement.setInt(5,Integer.parseInt(wine.getPrice()) );
+            preparedStatement.setInt(5, Integer.parseInt(wine.getPrice()));
             preparedStatement.setString(6, wine.getShopID());
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            System.out.println("valami baj van a Wine hozzáadásnál a WineStockban");
+            System.out.println("valami baj van a wineStock hozzáadásnál");
             System.out.println("" + e);
         }
 
     }
+
+    public void updateWine(Wine wine) {
+        String sql = "update wineStock set piece=piece+" + Integer.parseInt(wine.getPiece()) + " where name=" + "'" + wine.getName() + "'"
+                + " and type=" + "'" + wine.getType() + "'" + " and years=" + "'" + wine.getYear() + "'" + " and price=" + Integer.parseInt(wine.getPrice()) + " and shopID=" + "'" + wine.getShopID() + "'";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println("valami baj van a wineStock frissítésénél");
+            System.out.println("" + e);
+        }
+    }
+
+    public void removeWine(Wine wine) {
+        String sql = "update wineStock set piece=piece-" + Integer.parseInt(wine.getPiece()) + " where name=" + "'" + wine.getName() + "'"
+                + " and type=" + "'" + wine.getType() + "'" + " and years=" + "'" + wine.getYear() + "'" + " and price=" + Integer.parseInt(wine.getPrice()) + " and shopID=" + "'" + wine.getShopID() + "'";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println("valami baj van a wineStock frissítésénél");
+            System.out.println("" + e);
+        }
+    }
+
+
 }

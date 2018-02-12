@@ -45,7 +45,7 @@
                                     <Label text="Nincs adat." />
                                  </placeholder>
                               </TableView>
-                              <Pane fx:id="wineDataChangePaneModifiers" layoutX="4.0" layoutY="504.0" prefHeight="201.0" prefWidth="857.0" visible="false">
+                              <Pane fx:id="wineDataChangePaneModifiers" layoutX="4.0" layoutY="504.0" prefHeight="201.0" prefWidth="857.0">
                                  <children>
                                     <Button fx:id="addNewWine" layoutX="554.0" layoutY="131.0" mnemonicParsing="false" onAction="#addNewWine" prefHeight="45.0" prefWidth="112.0" text="Új tétel rögzítése" />
                                     <TextField fx:id="nameTFSet" layoutX="111.0" layoutY="54.0" prefHeight="25.0" prefWidth="150.0" />
@@ -63,7 +63,7 @@
                                     <ChoiceBox fx:id="shopIDChoiceBox" layoutX="330.0" layoutY="110.0" prefHeight="25.0" prefWidth="112.0" />
                                  </children></Pane>
                            </children></Pane>
-                        <Pane fx:id="invoicePane" prefHeight="415.0" prefWidth="866.0">
+                        <Pane fx:id="invoicePane" prefHeight="415.0" prefWidth="866.0" visible="false">
                            <children>
                               <TableView fx:id="invoiceTable" prefHeight="280.0" prefWidth="845.0">
                                  <placeholder>
@@ -167,12 +167,35 @@
                               <Button fx:id="removePartner" layoutX="656.0" layoutY="638.0" mnemonicParsing="false" onAction="#removePartner" prefHeight="45.0" prefWidth="105.0" text="Partner TÖRLÉSE" />
                            </children>
                         </Pane>
-                        <Pane fx:id="transferPane" prefHeight="716.0" prefWidth="845.0" visible="false">
+                        <Pane fx:id="transferPane" layoutX="1.0" layoutY="-9.0" prefHeight="729.0" prefWidth="866.0">
                            <children>
-                              <ChoiceBox fx:id="wineFrom" layoutX="180.0" layoutY="65.0" prefWidth="150.0" />
-                              <ChoiceBox fx:id="wineTo" layoutX="180.0" layoutY="127.0" prefWidth="150.0" />
-                              <Label alignment="CENTER_RIGHT" layoutX="112.0" layoutY="69.0" prefHeight="17.0" prefWidth="56.0" text="Honnan:" />
-                              <Label alignment="CENTER_RIGHT" layoutX="112.0" layoutY="131.0" prefWidth="56.0" text="Hova:" />
+                              <ChoiceBox fx:id="toWhereCB" layoutX="531.0" layoutY="69.0" prefWidth="150.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="73.0" prefHeight="17.0" prefWidth="56.0" text="Honnan:" />
+                              <Label alignment="CENTER_RIGHT" layoutX="475.0" layoutY="73.0" prefWidth="56.0" text="Hova:" />
+                              <Label fx:id="fromLb" layoutX="79.0" layoutY="69.0" prefHeight="25.0" prefWidth="123.0" />
+                              <Button fx:id="declineBtn" layoutX="730.0" layoutY="636.0" mnemonicParsing="false" onAction="#declineBtn" prefHeight="37.0" prefWidth="83.0" text="Elutasít" />
+                              <TableView fx:id="tableStock" layoutX="187.0" layoutY="119.0" prefHeight="186.0" prefWidth="505.0">
+                                  <placeholder>
+                                      <Label text="Nincs adat." />
+                                  </placeholder>
+                              </TableView>
+                              <TableView fx:id="tableSending" layoutX="187.0" layoutY="330.0" prefHeight="186.0" prefWidth="505.0">
+                                  <placeholder>
+                                      <Label text="Nincs adat." />
+                                  </placeholder>
+                              </TableView>
+                              <TableView fx:id="accpetingTable" layoutX="187.0" layoutY="542.0" prefHeight="138.0" prefWidth="505.0">
+                                  <placeholder>
+                                      <Label text="Nincs adat." />
+                                  </placeholder>
+                              </TableView>
+                              <Button fx:id="acceptBtn" layoutX="730.0" layoutY="582.0" mnemonicParsing="false" onAction="#acceptBtn" prefHeight="37.0" prefWidth="83.0" text="Elfogad" />
+                              <Button fx:id="cancelBtn" layoutX="730.0" layoutY="461.0" mnemonicParsing="false" onAction="#cancelBtn" prefHeight="37.0" prefWidth="83.0" text="Mégse" />
+                              <Button fx:id="sendBtn" layoutX="730.0" layoutY="405.0" mnemonicParsing="false" onAction="#sendBtn" prefHeight="37.0" prefWidth="83.0" text="Elküld" />
+                              <Button fx:id="closeBtn" layoutX="23.0" layoutY="119.0" mnemonicParsing="false" onAction="#closeBtn" prefHeight="64.0" prefWidth="112.0" text="Bezár" />
+                              <Button fx:id="addBtn" layoutX="736.0" layoutY="236.0" mnemonicParsing="false" onAction="#addBtn" prefHeight="45.0" prefWidth="83.0" text="Hozzáad" />
+                              <Label layoutX="741.0" layoutY="143.0" text="Darabszám:" />
+                              <TextField fx:id="addWineNumberTF" layoutX="730.0" layoutY="171.0" prefHeight="25.0" prefWidth="83.0" />
                            </children>
                         </Pane>
                         <Pane fx:id="employeePane" prefHeight="716.0" prefWidth="866.0" visible="false">
@@ -225,7 +248,7 @@
                               <Button fx:id="modifyShop" layoutX="585.0" layoutY="637.0" mnemonicParsing="false" onAction="#modifyShop" prefHeight="52.0" prefWidth="105.0" text="Üzlet &#10;módosítása" textAlignment="CENTER" />
                            </children>
                         </Pane>
-                        <Pane fx:id="newInvoicePane" layoutX="337.0" layoutY="328.0" prefHeight="186.0" prefWidth="200.0">
+                        <Pane fx:id="newInvoicePane" layoutX="337.0" layoutY="328.0" prefHeight="186.0" prefWidth="200.0" visible="false">
                            <children>
                               <Button fx:id="openNewInvoice" layoutX="50.0" layoutY="93.0" mnemonicParsing="false" onAction="#openNewInvoice" prefHeight="64.0" prefWidth="123.0" text="Új számla " />
                            </children>

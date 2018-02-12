@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Pair;
 
 
@@ -51,6 +52,10 @@ public class Controller implements Initializable {
 
 
     private LocalDate dateNow = null;
+
+    @FXML
+    Label fromLb;
+
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -82,13 +87,16 @@ public class Controller implements Initializable {
     TextField shopNameTFShop, areaCodeTFShop, cityTFShop, streetTFShop, streetNumTFShop;
 
     @FXML
-    Button addNewWineToInvoice, openNewInvoice, closeInvoice, addNewWine, deleteWine, addNewPartner, modifyPartner, removePartner, adNewEmployee, modifyEmployee, removeEmployee, addNewShop, modifyShop, removeShop;
+    TextField addWineNumberTF;
 
     @FXML
-    TableView invoiceTable, stockTable, stockTableByCountry, wineDataChangeTable, addPartnerTable, modifyPartnerTable, employeeTable, shopTable;
+    Button addNewWineToInvoice, openNewInvoice, closeInvoice, addNewWine, deleteWine, addNewPartner, modifyPartner, removePartner, adNewEmployee, modifyEmployee, removeEmployee, addNewShop, modifyShop, removeShop, closeBtn, sendBtn, cancelBtn, acceptBtn, declineBtn;
 
     @FXML
-    ChoiceBox shopIDChoiceBox, shopIDChoiceBoxEmployee, invoicePartnerCB, invoiceTypeCB;
+    TableView invoiceTable, stockTable, stockTableByCountry, wineDataChangeTable, addPartnerTable, modifyPartnerTable, employeeTable, shopTable, tableStock, tableSending, acceptingTable;
+
+    @FXML
+    ChoiceBox shopIDChoiceBox, shopIDChoiceBoxEmployee, invoicePartnerCB, invoiceTypeCB, toWhereCB;
 
 
     private static DBEmployee dbEmployee = new DBEmployee();
@@ -96,12 +104,13 @@ public class Controller implements Initializable {
     private static DBWine dbWine = new DBWine();
     private static DBShop dbShop = new DBShop();
     private static DBEmployeePassword dbEmployeePassword = new DBEmployeePassword();
-    private static DBInvoice dbInvoice=new DBInvoice();
-    private static DBWineStock dbWineStock=new DBWineStock();
+    private static DBInvoice dbInvoice = new DBInvoice();
+    private static DBWineStock dbWineStock = new DBWineStock();
 
-    private pdfGeneration pdfGeneration=new pdfGeneration();
+    private pdfGeneration pdfGeneration = new pdfGeneration();
 
     private final ObservableList<Wine> wineData = FXCollections.observableArrayList();
+    private ObservableList<Wine> wineStockData = FXCollections.observableArrayList();
     private ObservableList<Invoice> invoiceData = FXCollections.observableArrayList();
     private final ObservableList<Wine> stockWineDataCountry = FXCollections.observableArrayList();
     private final ObservableList<Wine> stockInvoiceData = FXCollections.observableArrayList();
@@ -167,8 +176,8 @@ public class Controller implements Initializable {
                         case MENU_INVOICE:
                             paneVisibleTrue(invoicePane, stockPane);
                             paneVisibleFalse(addPartnerPane, modifyPartnerPane, transferPane, wineDataChangePane, stockPaneByCountry, employeePane, shopPane, newInvoicePane);
-                            setInvoiceTableData();
-                            setStockTableData();
+                            setInvoiceTableData(invoiceTable);
+                            setStockTableData(stockTable);
                             break;
                         case MENU_LIST:
                             paneVisibleTrue(stockPaneByCountry);
@@ -188,6 +197,11 @@ public class Controller implements Initializable {
                             break;
                         case MENU_TRANSFER:
                             paneVisibleTrue(transferPane);
+                            menuPane.setDisable(true);
+                            setStockTableData(tableStock);
+                            setInvoiceTableData(tableSending);
+                            fromLb.setText(loggedEmploy.getIdShop());
+                            toWhichShop(loggedEmploy);
                             paneVisibleFalse(invoicePane, modifyPartnerPane, stockPane, wineDataChangePane, addPartnerPane, stockPaneByCountry, employeePane, shopPane, newInvoicePane);
                             break;
                         case MENU_COLLAEGUE:
@@ -388,27 +402,148 @@ public class Controller implements Initializable {
 
     }
 
+    //boltok betöltése a transferpane-be
 
+    public void toWhichShop(Employee employee) {
+        List<String> toShops = new ArrayList<>();
+        for (Shop s : dbShop.getAllShops()) {
+            if (!employee.getIdShop().toString().equals(s.getId().toString())) {
+                toShops.add(s.getShopName());
+            }
+        }
+        toWhereCB.getItems().clear();
+        toWhereCB.getItems().addAll(toShops);
+    }
+
+    public void closeBtn() {
+
+        transferPane.setVisible(false);
+        menuPane.setDisable(false);
+    }
+
+    private final ObservableList<Wine> winesToSend = FXCollections.observableArrayList();
+
+    public void addBtn() {
+        if (isItSelected()) {
+            if (addWineNumberTF.getText().isEmpty()) {
+                alert("Töltse ki a darabszámot");
+                return;
+            } else if (!isNumeric(addWineNumberTF.getText())) {
+                return;
+            }
+            Wine actualWine = (Wine) tableStock.getSelectionModel().getSelectedItem();
+            Wine toAdd = new Wine(actualWine.getName(), actualWine.getType(), actualWine.getYear(), addWineNumberTF.getText(), actualWine.getPrice(), actualWine.getShopID());
+            winesToSend.add(toAdd);
+            tableSending.setItems((ObservableList) winesToSend);
+
+            dbWineStock.removeWine(toAdd);
+            wineStockData.clear();
+            wineStockData.addAll(dbWineStock.getAllWinePerShop(loggedEmploy.getIdShop()));
+            tableStock.setItems(wineStockData);
+
+        } else {
+            alert("nem jelölt ki hozzáadandó bort");
+        }
+
+
+    }
+
+    public void sendBtn() {
+        if(toWhereCB.getSelectionModel().isEmpty()){
+            alert("Nem választott másik üzletet!");
+            return;
+        }
+
+    }
+
+    public void cancelBtn() {
+        List<Wine> wineToCancel = tableSending.getItems();
+        for (Wine w : wineToCancel) {
+            dbWineStock.updateWine(w);
+        }
+        wineStockData.clear();
+        wineStockData.addAll(dbWineStock.getAllWinePerShop(loggedEmploy.getIdShop()));
+        tableStock.getItems().clear();
+        wineStockData.addAll(dbWineStock.getAllWinePerShop(loggedEmploy.getIdShop()));
+        tableStock.setItems(wineStockData);
+        tableSending.getItems().clear();
+    }
+
+    public void acceptBtn() {
+
+    }
+
+    public void declineBtn() {
+
+    }
+
+    public boolean isItSelected() {
+        if (!tableStock.getSelectionModel().isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    //Invice pane létrehozása:
     Wine selectedWine = null;
     List<Invoice> invoiceList = new ArrayList<>();
-   // ObservableList invoiceData = null;
+    // ObservableList invoiceData = null;
     double finalPrice = 0;
-    Partner selectedPartner=null;
+    Partner selectedPartner = null;
 
     public void addNewWineToInvoice() {
+
         if (checkWineAndPiece()) {
             invoiceList.add(new Invoice(selectedWine.getName().toString(), selectedWine.getType().toString(), selectedWine.getYear().toString(), invoiceQuantityTF.getText().toString(), selectedWine.getPrice().toString(), selectedWine.getShopID().toString()));
             invoiceData = FXCollections.observableList(invoiceList);
             invoiceTable.setItems(invoiceData);
+            dbWineStock.removeWine(new Wine(selectedWine.getName().toString(), selectedWine.getType().toString(), selectedWine.getYear().toString(), invoiceQuantityTF.getText().toString(), selectedWine.getPrice().toString(), selectedWine.getShopID().toString()));
 
+            if (invoiceTable.getColumns().size() == 7) {
+                invoiceTable.getColumns().remove(6);
+            }
+            TableColumn removeCol = new TableColumn("Törlés");
+            removeCol.setMinWidth(100);
 
-            setStockTableData();
+            Callback<TableColumn<Invoice, String>, TableCell<Invoice, String>> cellFactory =
+                    new Callback<TableColumn<Invoice, String>, TableCell<Invoice, String>>() {
+                        @Override
+                        public TableCell call(final TableColumn<Invoice, String> param) {
+                            final TableCell<Invoice, String> cell = new TableCell<Invoice, String>() {
+                                final Button btn = new Button("Törlés");
+
+                                @Override
+                                public void updateItem(String item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty) {
+                                        setGraphic(null);
+                                        setText(null);
+                                    } else {
+                                        btn.setOnAction((ActionEvent event) ->
+                                        {
+                                            Invoice selectedInvoice = getTableView().getItems().get(getIndex());
+                                            invoiceData.remove(selectedInvoice);
+                                            dbWineStock.updateWine(new Wine(selectedInvoice.getName(), selectedInvoice.getType(), selectedInvoice.getYear(), selectedInvoice.getPiece(), selectedInvoice.getPrice(), selectedInvoice.getShopID()));
+                                            setStockTableData(stockTable);
+                                        });
+                                        setGraphic(btn);
+                                        setText(null);
+                                    }
+                                }
+                            };
+                            return cell;
+                        }
+                    };
+
+            removeCol.setCellFactory(cellFactory);
+            invoiceTable.getColumns().add(removeCol);
+            setStockTableData(stockTable);
         }
 
     }
 
     public void closeInvoice() {
-        if(invoiceTable.getItems().isEmpty()){
+        if (invoiceTable.getItems().isEmpty()) {
             alert("Nem szerepel tétel a számlán");
             return;
         }
@@ -428,12 +563,16 @@ public class Controller implements Initializable {
             for (Partner p : partners) {
                 if (p.getName().equals(invoicePartnerCB.getSelectionModel().getSelectedItem())) {
                     invoiceDiscountTF.setText(p.getDiscountPercent());
-                    selectedPartner=p;
+                    selectedPartner = p;
+                    System.out.println(p.getDiscountPercent());
                     break;
                 } else {
                     invoiceDiscountTF.setText(String.valueOf(0));
+
                 }
             }
+        } else {
+            invoiceDiscountTF.setText(String.valueOf(0));
         }
 
         invoiceDateTF.setText(formatedDateTime);
@@ -443,15 +582,16 @@ public class Controller implements Initializable {
             finalPrice = (finalPrice * (1 - (Double.parseDouble(invoiceDiscountTF.getText()) / 100)));
             invoiceFinalPriceTF.setText(String.valueOf(finalPrice));
         }
-//a táblát végül 1 INVOICE objektumban küldöm el az INVOICE adatbázisba
-        List<String>totalWineName=new ArrayList<>();
-        List<String>totalWineType=new ArrayList<>();
-        List<String>totalWineYear=new ArrayList<>();
-        List<String>totalWinePiece=new ArrayList<>();
-        List<String>totalWinePrice=new ArrayList<>();
-        String partnerID=selectedPartner==null? "nincs partner":selectedPartner.getId();
 
-        for (Invoice i:invoiceList) {
+//a táblát végül 1 INVOICE objektumban küldöm el az INVOICE adatbázisba
+        List<String> totalWineName = new ArrayList<>();
+        List<String> totalWineType = new ArrayList<>();
+        List<String> totalWineYear = new ArrayList<>();
+        List<String> totalWinePiece = new ArrayList<>();
+        List<String> totalWinePrice = new ArrayList<>();
+        String partnerID = selectedPartner == null ? "nincs partner" : selectedPartner.getId();
+
+        for (Invoice i : invoiceList) {
             totalWineName.add(i.getName());
             totalWineType.add(i.getType());
             totalWineYear.add(i.getYear());
@@ -459,26 +599,21 @@ public class Controller implements Initializable {
             totalWinePrice.add(i.getPrice());
         }
 
-
-        if(areYouSure("Véglegesítés","Biztosan lezárja a számlát?")){
+        if (areYouSure("Véglegesítés", "Biztosan lezárja a számlát?")) {
             invoicePane.setDisable(true);
             newInvoicePane.setVisible(true);
-            dbInvoice.addInvoice(new Invoice(totalWineName.toString(),totalWineType.toString(),totalWineYear.toString(),totalWinePiece.toString(),totalWinePrice.toString(),loggedEmploy.getIdShop(),String.valueOf(finalPrice),partnerID));
+            dbInvoice.addInvoice(new Invoice(totalWineName.toString(), totalWineType.toString(), totalWineYear.toString(), totalWinePiece.toString(), totalWinePrice.toString(), loggedEmploy.getIdShop(), String.valueOf(finalPrice), partnerID));
 
-            pdfGeneration.generatePDF("szamla",invoiceData,"számlaszám helye");
+            pdfGeneration.generatePDF("szamla", invoiceData, "számlaszám helye");
 
-        }else{
-            finalPrice=0;
+        } else {
+            finalPrice = 0;
             return;
         }
     }
 
 
-    public String oldCharToNew(String whatToConvert, String old, String old2){
-        return whatToConvert.replace(old,"").replace(old2,"");
-    }
-
-   public void openNewInvoice() {
+    public void openNewInvoice() {
         newInvoicePane.setVisible(false);
         invoicePane.setDisable(false);
         invoiceList.clear();
@@ -490,8 +625,8 @@ public class Controller implements Initializable {
         finalPrice = 0;
         invoiceTable.getItems().clear();
         emptyTextField(invoiceDateTF, invoiceDiscountTF, invoiceFinalPriceTF);
-        setInvoiceTableData();
-   }
+        setInvoiceTableData(invoiceTable);
+    }
 
     //WINE oszlopok hozzáadása: nem sikerült multi oszlopgenerálót csinálnom, csak a WINE generikusra
     private void addNewColumn(TableColumn name, int width, String attributeFromClass) {
@@ -499,8 +634,9 @@ public class Controller implements Initializable {
         name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setCellValueFactory(new PropertyValueFactory<Wine, String>(attributeFromClass));
     }
-    public void setInvoiceTableData() {
-        invoiceTable.getColumns().clear();
+
+    public void setInvoiceTableData(TableView tableView) {
+        tableView.getColumns().clear();
 
         TableColumn name = new TableColumn("Fajta");
         TableColumn type = new TableColumn("Típus");
@@ -509,18 +645,21 @@ public class Controller implements Initializable {
         TableColumn price = new TableColumn("Ár");
         TableColumn shopID = new TableColumn("Üzlet ID-je");
 
+
         addNewColumn(name, 200, "name");
         addNewColumn(type, 50, "type");
         addNewColumn(year, 50, "year");
         addNewColumn(piece, 50, "piece");
         addNewColumn(price, 50, "price");
         addNewColumn(shopID, 50, "shopID");
-        invoiceTable.getColumns().addAll(name, type, year, piece, price, shopID);
+
+        tableView.getColumns().addAll(name, type, year, piece, price, shopID);
     }
 
 
-    //invoicePane felépítése
-    public void setStockTableData() {
+    //Stockpane felépítése
+    public void setStockTableData(TableView tableV) {
+        tableV.getItems().clear();
         invoiceDateTF.setDisable(true);
         invoiceDiscountTF.setDisable(true);
         invoiceFinalPriceTF.setDisable(true);
@@ -531,8 +670,8 @@ public class Controller implements Initializable {
         sellerID.setText(loggedEmploy.getId());
         invoiceFinalPriceTF.setText(String.valueOf(finalPrice));
 
-        stockTable.getColumns().clear();
-        stockTable.getItems().clear();
+        tableV.getColumns().clear();
+        tableV.getItems().clear();
 
         TableColumn name = new TableColumn("Fajta");
         TableColumn type = new TableColumn("Típus");
@@ -548,9 +687,9 @@ public class Controller implements Initializable {
         addNewColumn(price, 50, "price");
         addNewColumn(shopID, 50, "shopID");
 
-        stockTable.getColumns().addAll(name, type, year, piece, price, shopID);
-        stockInvoiceData.addAll(dbWine.getAllWineByNameShopIDPrice_PerShop(loggedEmploy.getId()));
-        stockTable.setItems(stockInvoiceData);
+        tableV.getColumns().addAll(name, type, year, piece, price, shopID);
+        stockInvoiceData.addAll(dbWineStock.getAllWinePerShop(loggedEmploy.getIdShop()));
+        tableV.setItems(stockInvoiceData);
 
         invoicePartnerCB.getItems().clear();
         for (Partner p : dbPartner.getAllPartners()) {
@@ -558,7 +697,7 @@ public class Controller implements Initializable {
         }
         invoiceTypeCB.setItems(FXCollections.observableArrayList(Arrays.asList("készpénz", "bankkártya")));
 
-        emptyTextField( invoiceQuantityTF, invoiceWine, invoiceFinalPriceTF, invoiceDateTF);
+        emptyTextField(invoiceQuantityTF, invoiceWine, invoiceFinalPriceTF, invoiceDateTF);
 
     }
 
@@ -603,7 +742,7 @@ public class Controller implements Initializable {
         addNewColumn(shopID, 50, "shopID");
 
         stockTableByCountry.getColumns().addAll(name, type, year, piece, price, shopID);
-        stockWineDataCountry.addAll(dbWine.getAllWineByNameShopIDPrice());
+        stockWineDataCountry.addAll(dbWineStock.getAllWine());
         stockTableByCountry.setItems(stockWineDataCountry);
     }
 
@@ -643,11 +782,11 @@ public class Controller implements Initializable {
 
     }
 
-    public void setWineDataByCountry() {
-        paneVisibleFalse(addPartnerPane, modifyPartnerPane, transferPane, wineDataChangePane, stockPaneByCountry, employeePane, invoicePane, stockPane);
-        paneVisibleTrue(wineDataChangePane);
-        wineDataChangePaneModifiers.setVisible(false);
-    }
+//    public void setWineDataByCountry() {
+//        paneVisibleFalse(addPartnerPane, modifyPartnerPane, transferPane, wineDataChangePane, stockPaneByCountry, employeePane, invoicePane, stockPane);
+//        paneVisibleTrue(wineDataChangePane);
+//        wineDataChangePaneModifiers.setVisible(false);
+//    }
 
 
     public void addNewWine() {
@@ -659,13 +798,17 @@ public class Controller implements Initializable {
             return;
         }
         if (shopIDChoiceBox != null) {
-            Wine wine = new Wine(nameTFSet.getText(), typeTFSet.getText(), yearTFSet.getText(), pieceTFSet.getText(), priceTFSet.getText() + " Ft", shopIDChoiceBox.getSelectionModel().getSelectedItem().toString(), formatedDateTime);
+            Wine wine = new Wine(nameTFSet.getText(), typeTFSet.getText(), yearTFSet.getText(), pieceTFSet.getText(), priceTFSet.getText(), shopIDChoiceBox.getSelectionModel().getSelectedItem().toString(), formatedDateTime);
+            Wine wine1 = new Wine(nameTFSet.getText(), typeTFSet.getText(), yearTFSet.getText(), pieceTFSet.getText(), priceTFSet.getText(), shopIDChoiceBox.getSelectionModel().getSelectedItem().toString());
 
-            wineData.add(wine);
             dbWine.addNewWine(wine);
 
-
-            dbWineStock.addNewWine_OR_Insert(wine);
+            List<Wine> wineDBStock = dbWineStock.checkIfExist(wine1);
+            if (wineDBStock.isEmpty()) {
+                dbWineStock.addNewWine(wine1);
+            } else {
+                dbWineStock.updateWine(wine1);
+            }
 
             setWineDataChangeTable();
             nameTFSet.clear();
@@ -698,6 +841,7 @@ public class Controller implements Initializable {
         if (isItClickedWine()) {
             if (areYouSure("Bor eltávolátas", "Biztosan el akarod távolítani az adatbázisból?")) {
                 dbWine.removeWine(actualWine);
+                dbWineStock.removeWine(actualWine);
                 wineData.clear();
                 wineData.addAll(dbWine.getAllWine());
                 setWineDataChangeTable();
@@ -1132,7 +1276,7 @@ public class Controller implements Initializable {
         if (validID == null) {
             alert("hibás felhasználónév");
         }
-       // System.out.println("az id: " + validID);
+        // System.out.println("az id: " + validID);
 
         if (dbEmployeePassword.checkEmployeePassword(validID) != null && !dbEmployeePassword.checkEmployeePassword(validID).equals("")) {
             if (dbEmployeePassword.checkEmployeePassword(validID).equals(password.getText())) {
