@@ -12,6 +12,10 @@ public class DBWineStock {
     //létrehozzuk a kapcsolatot
     Connection conn = null;
 
+    public DBWineStock(Connection conn) {
+        this.conn = conn;
+    }
+
     Statement createStatement = null;
 
     public DBWineStock() {

@@ -5,27 +5,17 @@ import java.util.ArrayList;
 
 public class DBEmployee {
     final String JDBC_Driver = "org.apache.derby.jdbc.EmbeddedDriver";
-    final String URL = "jdbc:derby:sampleDB;create=true";
-    final String USERNAME = "";
-    final String PASSWORD = "";
+        final String URL = "jdbc:derby:sampleDB;create=true";
+        final String USERNAME = "";
+        final String PASSWORD = "";
 
-    //létrehozzuk a kapcsolatot
-    Connection conn = null;
+        //létrehozzuk a kapcsolatot
+        Connection conn = null;
 
-    Statement createStatement=null;
-    public DBEmployee() {
+        Statement createStatement=null;
+    public DBEmployee(Connection conn) {
 
-        try {
-            //  Connection conn= DriverManager.getConnection(URL,USERNAME,PASSWORD);
-
-            //megpróbáljuk életre kelteni
-            conn = DriverManager.getConnection(URL);
-
-
-        } catch (SQLException e) {
-            System.out.println("nem sikerült");
-            System.out.println("" + e);
-        }
+            this.conn = conn;
 
         //ha életre kelt, csinálunk egy megpakolható teherautót
         if (conn != null) {

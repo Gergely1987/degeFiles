@@ -98,8 +98,8 @@ public class Controller implements Initializable {
     @FXML
     ChoiceBox shopIDChoiceBox, shopIDChoiceBoxEmployee, invoicePartnerCB, invoiceTypeCB, toWhereCB;
 
-
-    private static DBEmployee dbEmployee = new DBEmployee();
+    private static DB db = new DB();
+    private static DBEmployee dbEmployee = new DBEmployee(db.getConn());
     private static DBPartner dbPartner = new DBPartner();
     private static DBWine dbWine = new DBWine();
     private static DBShop dbShop = new DBShop();
