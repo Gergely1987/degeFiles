@@ -1,6 +1,7 @@
 package Lambdak;
 
+@FunctionalInterface
 public interface Growl {
 
-    public void doSomething();
+    public void growling(int num);
 }
