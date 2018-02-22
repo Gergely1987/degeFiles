@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Feb 14 17:52:29 CET 2018:
+ Derby The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820) változat betöltése: a816c00e-0161-953b-559a-00000715b2f0 példány
+a(z) C:\GIT\PhoneBookWithDatabaseConnection\sampleDB adatbázis-könyvtáron: jdk.internal.loader.ClassLoaders$AppClassLoader@73a8dfcc 
+
+java.vendor=Oracle Corporation
+java.runtime.version=9.0.4+11
+user.dir=C:\GIT\PhoneBookWithDatabaseConnection
+os.name=Windows 7
+os.arch=amd64
+os.version=6.1
+derby.system.home=null
+Az adatbázis-osztálybetöltő elindult - derby.database.classpath=''
