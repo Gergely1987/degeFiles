@@ -1,0 +1,9 @@
+Timesheet
+
+John Connor worked 14 hours in January 2013.
+
+Itemize as projects:
+
+      Project       Hour
+      Java           10
+      C++             4

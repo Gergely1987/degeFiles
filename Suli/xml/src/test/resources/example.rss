@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+    <channel>
+        <title>Example</title>
+        <link>yellowroad.training360.com</link>
+        <description>Right trip to coding</description>
+        <item>
+            <title>Basics</title>
+            <link>yellowroad.training360.com/lesson</link>
+            <description>You can learn the basics of coding</description>
+        </item>
+        <item>
+            <title>Frontend</title>
+            <link>http://yellowroad.training360.com/lesson/frontend</link>
+            <description>You can learn everything about Frontend</description>
+        </item>
+        <item>
+            <title>Java</title>
+            <link>http://yellowroad.training360.com/java</link>
+            <description>You can learn everything about Java</description>
+        </item>
+        <item>
+            <title>PHP</title>
+            <link>http://yellowroad.training360.com/lesson/php</link>
+            <description>You can learn everything about PHP</description>
+        </item>
+    </channel>
+
+</rss>

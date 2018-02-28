@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ApexVcsIndex">
+    <index-move-record>
+      <option name="firstPath" value="/src/sample/sample.fxml" />
+      <option name="path" value="/src/java/sample.fxml" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/src/sample/Controller.java" />
+      <option name="path" value="/src/java/Controller.java" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/src/sample/FirstRealApp" />
+      <option name="path" value="/src/java/FirstRealApp" />
+    </index-move-record>
+    <index-move-record>
+      <option name="firstPath" value="/src/sample/Main.java" />
+      <option name="path" value="/src/java/Main.java" />
+    </index-move-record>
+  </component>
+</project>

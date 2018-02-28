@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Orszagok">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <Pane prefHeight="402.0" prefWidth="606.0">
+         <children>
+            <Button layoutX="499.0" layoutY="118.0" mnemonicParsing="false" text="Törlés" />
+            <Button layoutX="499.0" layoutY="78.0" mnemonicParsing="false" text="Mentés" />
+            <Button layoutX="499.0" layoutY="161.0" mnemonicParsing="false" text="Mégsem" />
+            <TextArea layoutX="14.0" layoutY="34.0" prefHeight="286.0" prefWidth="444.0" />
+         </children>
+      </Pane>
+   </children>
+</GridPane>

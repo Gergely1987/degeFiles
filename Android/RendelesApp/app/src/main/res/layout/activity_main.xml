@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.rendelesapp.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/nev1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rántott hús"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/ar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1250 Ft"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+        <Button
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:text="+"
+            android:onClick="increaseButton"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+
+        <Button
+
+            android:layout_width="70dp"
+            android:layout_height="45dp"
+            android:text="-"
+            android:onClick="decreaseButton"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nev2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rántott hús"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <TextView
+                android:id="@+id/ar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1000 Ft"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:text="+"
+                android:onClick="increaseButton"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                />
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="45dp"
+                android:text="-"
+                android:onClick="decreaseButton"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/vegsoAr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="a végső ár"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

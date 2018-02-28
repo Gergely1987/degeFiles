@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.havefuncard.MainActivity">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/kiss"></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bluepaper"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/redpaper"
+            android:layout_margin="25dp"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/yellowpaper"
+            android:layout_margin="50dp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_weight="3"
+            android:background="#38610B"
+            android:layout_alignParentBottom="true"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Be smart always!"
+                android:textColor="#ffffff"
+                android:textSize="22sp"
+                android:fontFamily="monospace"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/firsLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember"
+                android:layout_centerInParent="true"
+                android:textSize="30dp"
+                android:textColor="#610B21"/>
+            <TextView
+                android:id="@+id/secondLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="to have"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/firsLine"
+                android:textSize="30dp"
+                android:textColor="#610B21"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FUN!!"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/secondLine"
+                android:textSize="30sp"
+                android:textColor="#610B21"
+                />
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/korona"
+                android:layout_above="@+id/firsLine"
+                android:layout_centerHorizontal="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

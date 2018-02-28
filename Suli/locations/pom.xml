@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.training360.yellowroad</groupId>
+    <artifactId>locations</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+    </properties>
+
+    <parent> <!-- EZ MONDJA MEGY HOGY SPRINGBOOT--><!-- AMI INNENTŐL VAN AZOK A FÜGGŐSÉGEK, AMIKET FEL KELL VENNI A SPRINGBOOT-HOZ-->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId><!-- JDBC TECHNOLÓGIVÁL CSATLAKOZIK AZ ADATBÁZISHOZ -->
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId><!-- EZ HOZZA LÉTRE A TÁBLÁKAT-->
+            <version>4.2.0</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.195</version>
+        </dependency> -->
+        <dependency>
+            <groupId>mysql</groupId><!--MYSQL-HEZ AKAR CSATLAKOZNI, TÖLTSE LE A HOZZÁ SZÜKSÉGES DRIVERT -->
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.41</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.4.0.RELEASE</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

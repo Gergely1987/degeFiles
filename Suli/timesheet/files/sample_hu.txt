@@ -1,0 +1,9 @@
+Munkaidõ nyilvántartás
+
+John Connor 2013 január hónapjában 14 órát dolgozott.
+
+Projektenként részletezve:
+
+      Projekt       Óra
+      Java           10
+      C++             4

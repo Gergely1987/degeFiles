@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.helloandroid.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_marginTop="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/udacity" />
+
+            <TextView
+                android:id="@+id/firstLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Udacity"
+                android:layout_below="@+id/image"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/secondLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="650-555-5555"
+            android:layout_below="@+id/firstLine"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/thirdLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.udacity.com"
+            android:layout_below="@+id/secondLine"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/forthLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2465 Latham St, Mountain View, CA 94043"
+            android:layout_below="@+id/thirdLine"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"/>
+        <TextView
+            android:id="@+id/fifthLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.udacity.com"
+            android:layout_below="@+id/forthLine"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"/>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
